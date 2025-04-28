@@ -1,5 +1,3 @@
-
-
 export const MovieList = () => {
     return (
         <div>
@@ -11,4 +9,4 @@ export const MovieList = () => {
             </ul>
         </div>
     )
-}
+};
