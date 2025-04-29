@@ -18,6 +18,7 @@ export const Header = styled.header`
     
     h1:hover {
         color: #7B2CBF;
+        transition: 0.3s;
         }
 `
 
@@ -34,6 +35,7 @@ export const Menu = styled.nav`
     }
 
     li:hover {
-    color: #7B2CBF
+    color: #7B2CBF;
+    transition: 0.3s;
     }
 `
