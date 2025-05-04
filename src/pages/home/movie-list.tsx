@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { deleteMovieById, getMovies } from "../../services/api";
+import { deleteMovieById, getMovies, updateMovieById } from "../../services/api";
 import { Link } from "react-router-dom";
 import * as S from './style'
 
@@ -23,6 +23,8 @@ interface Movie {
 
 export const MovieList = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     useEffect(() => {
         const fetchMovies = async () => {
@@ -36,10 +38,29 @@ export const MovieList = () => {
         fetchMovies();
     }, []);
 
+    const handleEditClick = (movie: Movie) => {
+        setSelectedMovie(movie);
+        setShowEditModal(true);
+    };
+
+    const handleUpdate = async () => {
+        if (!selectedMovie) return;
+
+        try {
+            await updateMovieById(selectedMovie.id, selectedMovie);
+            setShowEditModal(false);
+            const updatedMovies = await getMovies();
+            setMovies(updatedMovies);
+        } catch (error) {
+            console.error("Erro ao atualizar filme", error);
+        }
+    };
+
+
     const removeMovie = async (id: number) => {
         try {
             await deleteMovieById(id);
-            const movies = await getMovies(); 
+            const movies = await getMovies();
             setMovies(movies);
         } catch (error) {
             console.error("Error removing movie:", error);
@@ -47,8 +68,6 @@ export const MovieList = () => {
         }
     };
 
-
-    // na tua listagem de filmes, podera ter 2 botoes (1 para atualizar o filme, pode ser usado um modal ou uma pagina para atualizacao, e outro botao para remover o filme no banco de dados)
     return (
         <S.Main>
             <h1>Lista de filmes</h1>
@@ -61,7 +80,7 @@ export const MovieList = () => {
                                     <h2>{movie.title}</h2>
                                 </Link>
                                 <S.MovieButtons>
-                                    <S.Button>Atualizar</S.Button>
+                                    <S.Button onClick={() => handleEditClick(movie)}>Atualizar</S.Button>
                                     <S.Button onClick={() => removeMovie(movie.id)}>Remover</S.Button>
                                 </S.MovieButtons>
                             </S.MovieItem>
@@ -70,6 +89,33 @@ export const MovieList = () => {
 
                 }
             </S.MovieList>
+
+            {showEditModal && selectedMovie && (
+                <div className="modal">
+                    <h2>Editar Filme</h2>
+                    <input
+                        value={selectedMovie.title}
+                        onChange={(e) =>
+                            setSelectedMovie({ ...selectedMovie, title: e.target.value })
+                        }
+                    />
+
+                    <input
+                        type="number"
+                        placeholder="Contagem de Oscars"
+                        value={selectedMovie.oscar_count}
+                        onChange={(e) =>
+                            setSelectedMovie({
+                                ...selectedMovie,
+                                oscar_count: Number(e.target.value),
+                            })
+                        }
+                    />
+                    <button onClick={handleUpdate}>Salvar</button>
+                    <button onClick={() => setShowEditModal(false)}>Cancelar</button>
+                </div>
+            )}
+
         </S.Main>
 
     )
