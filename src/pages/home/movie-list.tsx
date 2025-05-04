@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMovies } from "../../services/api";
 import { Link } from "react-router-dom";
+import * as S from './style'
 
 interface Movie {
     id: number,
@@ -38,19 +39,27 @@ export const MovieList = () => {
 
     // na tua listagem de filmes, podera ter 2 botoes (1 para atualizar o filme, pode ser usado um modal ou uma pagina para atualizacao, e outro botao para remover o filme no banco de dados)
     return (
-        <ul>
+        <S.Main>
+        <h1>Lista de filmes</h1>
+            <S.MovieList>
             {
                 movies.map((movie) => {
                     return (
-                        <li key={movie.id}>
+                        <S.MovieItem key={movie.id}>
                             <Link to={`/movie/${movie.id}`}>
                                 <h2>{movie.title}</h2>
                             </Link>
-                        </li>
+                            <S.MovieButtons>
+                                <S.Button>Atualizar</S.Button>
+                                <S.Button>Remover</S.Button>
+                            </S.MovieButtons>
+                        </S.MovieItem>
                     )
                 })
 
             }
-        </ul>
+        </S.MovieList>
+        </S.Main>
+        
     )
 }

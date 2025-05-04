@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Header = styled.header`
-    background-color: #121212;
+    background-color: #141414;
     border-bottom: 2px solid #7B2CBF;
     font-family: "Bebas Neue", sans-serif;
     letter-spacing: 2px;

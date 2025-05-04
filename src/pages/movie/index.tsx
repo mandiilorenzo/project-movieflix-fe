@@ -45,8 +45,8 @@ export const Movies = () => {
                         <p> Data de lançamento: {new Date(movie.release_date).toLocaleDateString('pt-BR')}</p>
                         <p>Gênero: {movie.genres.name}</p>
                         <p>{movie.languages.name}</p>
-                        <p>Prêmios vencidos do Oscar: {movie.oscar_count}</p>
-                        <p>Duração do filme: {movie.duration} minutes</p>
+                        <p>Prêmios Oscar: {movie.oscar_count}</p>
+                        <p>Duração do filme: {movie.duration} minutos</p>
                     </div>
                 )
             }
