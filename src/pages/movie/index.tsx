@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { getMovieById } from "../../services/api"
 import { useParams } from "react-router-dom";
+import * as S from './style'
 
 interface Movie {
     id: number,
@@ -37,19 +38,22 @@ export const Movies = () => {
     }, [id])
 
     return (
-        <>
+        <S.Main>
             {
                 movie && (
-                    <div>
-                        <h1>{movie.title}</h1>
-                        <p> Data de lançamento: {new Date(movie.release_date).toLocaleDateString('pt-BR')}</p>
-                        <p>Gênero: {movie.genres.name}</p>
-                        <p>{movie.languages.name}</p>
-                        <p>Prêmios Oscar: {movie.oscar_count}</p>
-                        <p>Duração do filme: {movie.duration} minutos</p>
-                    </div>
+                    <S.Movie>
+                        <div>
+                            <h1>{movie.title}</h1>
+                            <p> <span>Data de lançamento:</span> {new Date(movie.release_date).toLocaleDateString('pt-BR')}</p>
+                            <p><span>Gênero:</span> {movie.genres.name}</p>
+                            <p><span>Linguagem:</span> {movie.languages.name}</p>
+                            <p><span>Oscars:</span> {movie.oscar_count}</p>
+                            <p><span>Duração do filme:</span> {movie.duration} minutos</p>
+                        </div>
+                    </S.Movie>
                 )
             }
-        </>
+        </S.Main>
+
     )
 }
