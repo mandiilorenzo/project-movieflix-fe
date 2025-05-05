@@ -95,14 +95,14 @@ export const MovieList = () => {
 
                     <S.ModalContent>
                         <h2>Atualizar filme</h2>
-                        <input
+                        <S.Input
                             value={selectedMovie.title}
                             onChange={(e) =>
                                 setSelectedMovie({ ...selectedMovie, title: e.target.value })
                             }
                         />
 
-                        <input
+                        <S.Input
                             type="number"
                             placeholder="Contagem de Oscars"
                             value={selectedMovie.oscar_count}

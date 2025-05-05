@@ -21,9 +21,10 @@ export const Main = styled.main`
 
 export const MovieList = styled.ul`
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 30px;
-    max-width: 900px;
+    width: 900px;
+    max-width: 1200px;
     margin: auto;
     padding-bottom: 20px;
 `
@@ -35,10 +36,12 @@ export const MovieItem = styled.li`
     display: flex;
     flex-direction: column;
     padding: 20px;
+    margin-top: 30px;
     justify-content: center;
     gap: 20px;
     text-align: center;
-    max-width: 100%;
+    width: 100%;
+    max-width: 300px;
     height: 165px;
     transition: transform 0.3s, box-shadow 0.3s;
 
@@ -59,7 +62,7 @@ export const MovieItem = styled.li`
 
         &:hover {
             &:hover {
-                color: #ff00f2;
+                color:#33ccff;
                 }
         }
 `
@@ -84,6 +87,7 @@ export const Button = styled.button`
     font-size: 14px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+    align-self: center;
 
     &:hover {
         background-color: #8800cc;
@@ -120,5 +124,32 @@ export const ModalContent = styled.div`
     font-family: 'Bebas Neue', sans-serif;
     letter-spacing: 1px;
     font-size: 18px;
+    font-weight: 200;
     text-align: center;
+`
+
+export const Input = styled.input`
+    background-color: #1e1e1e;
+    border: 1px solid #a100ff;
+    color: #ffffff;
+    padding: 8px 12px;
+    width: 100%;
+    border-radius: 6px;
+    font-weight: 400;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+        background-color: #8800cc;
+        box-shadow: 0 0 10px rgba(161, 0, 255, 0.4);
+        transform: translateY(-2px)
+        }
+    
+    &:focus {
+        outline: none;
+        border: 1px solid  #ff00f2;
+        box-shadow: 0 0 10px rgba(255, 0, 242, 0.4);
+        transform: translateY(-2px)
+    }
 `
