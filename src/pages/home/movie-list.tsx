@@ -91,29 +91,33 @@ export const MovieList = () => {
             </S.MovieList>
 
             {showEditModal && selectedMovie && (
-                <div className="modal">
-                    <h2>Editar Filme</h2>
-                    <input
-                        value={selectedMovie.title}
-                        onChange={(e) =>
-                            setSelectedMovie({ ...selectedMovie, title: e.target.value })
-                        }
-                    />
+                <S.Modal>
 
-                    <input
-                        type="number"
-                        placeholder="Contagem de Oscars"
-                        value={selectedMovie.oscar_count}
-                        onChange={(e) =>
-                            setSelectedMovie({
-                                ...selectedMovie,
-                                oscar_count: Number(e.target.value),
-                            })
-                        }
-                    />
-                    <button onClick={handleUpdate}>Salvar</button>
-                    <button onClick={() => setShowEditModal(false)}>Cancelar</button>
-                </div>
+                    <S.ModalContent>
+                        <h2>Atualizar filme</h2>
+                        <input
+                            value={selectedMovie.title}
+                            onChange={(e) =>
+                                setSelectedMovie({ ...selectedMovie, title: e.target.value })
+                            }
+                        />
+
+                        <input
+                            type="number"
+                            placeholder="Contagem de Oscars"
+                            value={selectedMovie.oscar_count}
+                            onChange={(e) =>
+                                setSelectedMovie({
+                                    ...selectedMovie,
+                                    oscar_count: Number(e.target.value),
+                                })
+                            }
+                        />
+                        <S.Button onClick={handleUpdate}>Salvar</S.Button>
+                        <S.Button onClick={() => setShowEditModal(false)}>Cancelar</S.Button>
+                    </S.ModalContent>
+
+                </S.Modal>
             )}
 
         </S.Main>
