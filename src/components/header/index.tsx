@@ -8,7 +8,7 @@ export const Header = () => {
             <S.Menu>
                 <ul>
                     <Link to={"/"}><li><a>Home</a></li></Link>
-                    <li><a>Login</a></li>
+                    <Link to={"/register"}><li><a>Login</a></li></Link>
                 </ul>
             </S.Menu>
         </S.Header>

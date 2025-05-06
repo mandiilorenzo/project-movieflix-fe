@@ -41,8 +41,7 @@ export const MovieItem = styled.li`
     gap: 20px;
     text-align: center;
     width: 100%;
-    max-width: 300px;
-    height: 165px;
+    height: 185px;
     transition: transform 0.3s, box-shadow 0.3s;
 
     &:hover {
@@ -141,7 +140,6 @@ export const Input = styled.input`
     transition: 0.3s ease-in-out;
 
     &:hover {
-        background-color: #8800cc;
         box-shadow: 0 0 10px rgba(161, 0, 255, 0.4);
         transform: translateY(-2px)
         }

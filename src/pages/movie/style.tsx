@@ -29,7 +29,8 @@ export const Movie = styled.div`
         font-weight: 400;
         letter-spacing: 2px;
         font-family: "Bebas Neue", sans-serif;
-        margin-bottom: 20px;
+        margin-bottom: 40px;
+        text-align: center;
     }
 
     p {
