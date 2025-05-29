@@ -72,6 +72,7 @@ export const MovieList = () => {
     return (
         <S.Main>
             <h1>Lista de filmes</h1>
+            
             <S.MovieList>
                 {
                     movies.map((movie) => {
@@ -120,6 +121,12 @@ export const MovieList = () => {
 
                 </S.Modal>
             )}
+
+            <div>
+                <Link to="/createMovie">
+                    <S.Button>Criar novo filme</S.Button>
+                </Link>
+            </div>
 
         </S.Main>
 

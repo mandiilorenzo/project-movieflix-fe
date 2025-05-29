@@ -13,6 +13,7 @@ export const router = createBrowserRouter([
             {path: "/home", element: <MovieList/>},
             {path: "/movie/:id", element: <Movies/>},
             {path: "/register", element: <Form/>},
+            {path: "/createMovie", element: <Form/>}
         ]
     }
 ])

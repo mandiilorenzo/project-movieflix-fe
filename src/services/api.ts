@@ -73,3 +73,21 @@ export const updateMovieById = async (id: number, data: Movie) => {
         icon: "success"
     });
 }
+
+export const createMovie = async (data: Movie) => {
+    const response = await fetch("http://localhost:3000/movies", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    if (!response.ok) {
+        throw new Error("Erro ao criar filme");
+    }
+    Swal.fire({
+        title: "Pronto!",
+        text: "Filme criado com sucesso!",
+        icon: "success"
+    });
+}
