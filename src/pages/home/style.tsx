@@ -146,7 +146,7 @@ export const Input = styled.input`
     
     &:focus {
         outline: none;
-        border: 1px solid  #ff00f2;
+        border: 1px solidrgb(138, 34, 132);
         box-shadow: 0 0 10px rgba(255, 0, 242, 0.4);
         transform: translateY(-2px)
     }

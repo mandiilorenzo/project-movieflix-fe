@@ -1,3 +1,5 @@
+import Swal from "sweetalert2";
+
 interface Movie {
     id: number,
     title: string,
@@ -44,11 +46,14 @@ export const deleteMovieById = async (id: number) => {
             "Content-Type": "application/json"
         }
     });
-    if (response.ok) {
-        return;
-    } else {
+    if (!response.ok) {
         throw new Error("Erro ao deletar filme");
     }
+    Swal.fire({
+        title: "Pronto!",
+        text: "Filme removido com sucesso!",
+        icon: "success"
+    });
 }
 
 export const updateMovieById = async (id: number, data: Movie) => {
@@ -59,9 +64,12 @@ export const updateMovieById = async (id: number, data: Movie) => {
         },
         body: JSON.stringify(data)
     });
-    if (response.ok) {
-        return await response.json();
-    } else {
+    if (!response.ok) {
         throw new Error("Erro ao atualizar filme");
     }
+    Swal.fire({
+        title: "Pronto!",
+        text: "Filme atualizado com sucesso!",
+        icon: "success"
+    });
 }

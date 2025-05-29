@@ -30,6 +30,7 @@ export const MovieList = () => {
         const fetchMovies = async () => {
             try {
                 const movies = await getMovies();
+                console.log(movies);
                 setMovies(movies);
             } catch (error) {
                 console.error("Error fetching movies:", error);
@@ -57,7 +58,7 @@ export const MovieList = () => {
     };
 
 
-    const removeMovie = async (id: number) => {
+    const handleDeleteMovie = async (id: number) => {
         try {
             await deleteMovieById(id);
             const movies = await getMovies();
@@ -81,7 +82,7 @@ export const MovieList = () => {
                                 </Link>
                                 <S.MovieButtons>
                                     <S.Button onClick={() => handleEditClick(movie)}>Atualizar</S.Button>
-                                    <S.Button onClick={() => removeMovie(movie.id)}>Remover</S.Button>
+                                    <S.Button onClick={() => handleDeleteMovie(movie.id)}>Remover</S.Button>
                                 </S.MovieButtons>
                             </S.MovieItem>
                         )
