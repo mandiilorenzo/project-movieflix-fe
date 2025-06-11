@@ -118,15 +118,14 @@ export const MovieList = () => {
                         <S.Button onClick={handleUpdate}>Salvar</S.Button>
                         <S.Button onClick={() => setShowEditModal(false)}>Cancelar</S.Button>
                     </S.ModalContent>
-
                 </S.Modal>
             )}
 
-            <div>
+            <S.NewMovie>
                 <Link to="/createMovie">
-                    <S.Button>Criar novo filme</S.Button>
+                    <S.Button>Cadastrar novo filme</S.Button>
                 </Link>
-            </div>
+            </S.NewMovie>
 
         </S.Main>
 

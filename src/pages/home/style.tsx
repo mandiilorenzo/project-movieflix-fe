@@ -79,11 +79,11 @@ export const Button = styled.button`
     background-color: #a100ff;
     border: none;
     color: #ffffff;
-    padding: 8px 12px;
+    padding: 10px;
     width: 120px;
     border-radius: 6px;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     align-self: center;
@@ -150,4 +150,9 @@ export const Input = styled.input`
         box-shadow: 0 0 10px rgba(255, 0, 242, 0.4);
         transform: translateY(-2px)
     }
+`
+
+export const NewMovie = styled.div`
+    text-align: center;
+    margin-top: 30px;
 `
