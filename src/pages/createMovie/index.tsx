@@ -1,6 +1,8 @@
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { createMovie } from '../../services/api';
-
+import Select, { GroupBase } from 'react-select';
+import { getCustomSelectStyles } from './styleSelect';
+import * as S from './style';
 
 interface formData {
     id: number,
@@ -20,8 +22,32 @@ interface formData {
     }
 }
 
+export type Option = {
+    value: number;
+    label: string;
+};
+
+
+const languageOptions: Option[] = [
+    { value: 1, label: 'Português' },
+    { value: 2, label: 'Inglês' },
+    { value: 3, label: 'Espanhol' },
+    { value: 4, label: 'Francês' },
+    { value: 5, label: 'Japonês' }
+];
+
+const genreOptions: Option[] = [
+    { value: 1, label: 'Ação' },
+    { value: 2, label: 'Suspense' },
+    { value: 3, label: 'Aventura' },
+    { value: 4, label: 'Terror' },
+    { value: 5, label: 'Animação' },
+    { value: 6, label: 'Comédia' },
+    { value: 7, label: 'Romance' }
+];
+
 export const CreateMovie = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<formData>();
+    const { register, handleSubmit, control, formState: { errors, touchedFields } } = useForm<formData>();
 
     const onSubmit = async (data: formData) => {
         try {
@@ -32,62 +58,96 @@ export const CreateMovie = () => {
         }
     };
 
+    const isValidField = (name: keyof formData) => {
+        return touchedFields[name] && !errors[name];
+    };
+
     return (
-        <main>
+        <S.Main>
             <h1>Cadastrar novo filme</h1>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <input
+            <S.Form onSubmit={handleSubmit(onSubmit)}>
+                <S.Label htmlFor="title">Título:</S.Label>
+                <S.Input
                     type="text"
                     placeholder="Título do filme"
-                    {...register("title", { required: "Título é obrigatório" })}
+                    $isValid={isValidField("title")}
+                    {...register("title", { required: "Campo obrigatório" })}
                 />
-                {errors.title && <span>{errors.title.message}</span>}
+                {errors.title && <S.ErrorMessage>{errors.title.message || '\u00A0'}</S.ErrorMessage>}
 
-                <input
+                <S.Label htmlFor="release_date">Data de lançamento:</S.Label>
+                <S.Input
                     type="date"
                     placeholder="Data de lançamento"
-                    {...register("release_date", { required: "Data é obrigatória" })}
+                    $isValid={isValidField("release_date")}
+                    {...register("release_date", { required: "Campo obrigatório" })}
                 />
-                {errors.release_date && <span>{errors.release_date.message}</span>}
+                {errors.title && <S.ErrorMessage>{errors.title.message || '\u00A0'}</S.ErrorMessage>}
 
-                <input
+                <S.Label htmlFor="oscar_count">Quantidade de Oscars:</S.Label>
+                <S.Input
                     type="number"
                     placeholder="Contagem de Oscars"
-                    {...register("oscar_count", { required: "Campo obrigatório" })}
+                    $isValid={isValidField("oscar_count")}
+                    {...register("oscar_count", { required: "Campo obrigatório", valueAsNumber: true })}
                 />
-                {errors.oscar_count && <span>{errors.oscar_count.message}</span>}
+                {errors.oscar_count && <S.ErrorMessage>{errors.oscar_count.message || '\u00A0'}</S.ErrorMessage>}
 
-                <input
+                <S.Label htmlFor="duration">Duração do filme:</S.Label>
+                <S.Input
                     type="number"
-                    placeholder="Duração do filme (em minutos)"
-                    {...register("duration", { required: "Campo obrigatório" })}
+                    placeholder="em minutos"
+                    $isValid={isValidField("duration")}
+                    {...register("duration", { required: "Campo obrigatório", valueAsNumber: true })}
                 />
-                {errors.duration && <span>{errors.duration.message}</span>}
+                {errors.duration && <S.ErrorMessage>{errors.duration.message || '\u00A0'}</S.ErrorMessage>}
 
-                <select {...register("genre_id", { required: "Gênero obrigatório" })}>
-                    <option value="">Selecione o gênero</option>
-                    <option value="1">Ação</option>
-                    <option value="2">Suspense</option>
-                    <option value="3">Aventura</option>
-                    <option value="4">Terror</option>
-                    <option value="5">Animação</option>
-                    <option value="6">Romance</option>
-                    <option value="7">Comédia</option>
-                </select>
-                {errors.genre_id && <span>{errors.genre_id.message}</span>}
+                <div>
+                    <S.Label>Gênero</S.Label>
+                    <Controller
+                        name="genre_id"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <Select<Option, false, GroupBase<Option>>
+                                options={genreOptions}
+                                placeholder="selecione.."
+                                value={genreOptions.find(option => option.value === field.value) || null}
+                                onChange={(option) => {
+                                    field.onChange(option?.value);
+                                    field.onBlur(); // Isso marca como "tocado"
+                                }}
+                                styles={getCustomSelectStyles(!!isValidField("genre_id"))}
+                            />
+                        )}
+                    />
+                    {errors.genre_id && <S.ErrorMessage>Campo obrigatório</S.ErrorMessage>}
+                </div>
 
-                <select {...register("language_id", { required: "Idioma obrigatório" })}>
-                    <option value="">Selecione o idioma</option>
-                    <option value="1">Português</option>
-                    <option value="2">Inglês</option>
-                    <option value="3">Espanhol</option>
-                    <option value="4">Francês</option>
-                    <option value="5">Japonês</option>
-                </select>
-                {errors.language_id && <span>{errors.language_id.message}</span>}
+                <div>
+                    <S.Label>Idioma</S.Label>
+                    <Controller
+                        name="language_id"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                            <Select<Option, false, GroupBase<Option>>
+                                options={languageOptions}
+                                placeholder="selecione.."
+                                value={languageOptions.find(option => option.value === field.value) || null}
+                                onChange={(option) => {
+                                    field.onChange(option?.value);
+                                    field.onBlur();
+                                }}
+                                styles={getCustomSelectStyles(!!isValidField("language_id"))}
+                            />
+                        )}
+                    />
+                    {errors.language_id && <S.ErrorMessage>Campo obrigatório</S.ErrorMessage>}
+                </div>
 
-                <button type="submit">Criar Filme</button>
-            </form>
-        </main>
+                <S.Button type="submit">Criar Filme</S.Button>
+            </S.Form>
+        </S.Main>
     );
 };

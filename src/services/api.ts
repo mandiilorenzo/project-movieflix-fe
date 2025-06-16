@@ -82,8 +82,10 @@ export const createMovie = async (data: Movie) => {
         },
         body: JSON.stringify(data)
     });
+    const responseBody = await response.json().catch(() => null);
     if (!response.ok) {
-        throw new Error("Erro ao criar filme");
+        console.error("Erro ao criar filme:", response.status, responseBody);
+        throw new Error(responseBody?.message || "Erro ao criar filme");
     }
     Swal.fire({
         title: "Pronto!",

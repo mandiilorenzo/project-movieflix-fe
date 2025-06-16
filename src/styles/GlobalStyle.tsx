@@ -14,4 +14,17 @@ export const GlobalStyle = createGlobalStyle`
     a {
         text-decoration: none;
     }
+    
+    .custom-select__placeholder {
+    text-transform: none !important;
+    }
+    
+    .custom-select__single-value {
+    text-transform: none !important;
+    }
+    
+    .custom-select__option {
+    text-transform: none !important;
+    }
+
 `

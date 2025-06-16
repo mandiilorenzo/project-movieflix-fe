@@ -4,8 +4,8 @@ export const Main = styled.main`
     height: 100vh;
     margin: auto;
     background-color: #141414;
-    font-family: 'Roboto', sans-serif;
-    padding-bpottom: 30px;
+    font-family: "Bebas Neue", sans-serif;
+    padding-bottom: 30px;
 
     h1 {
         color:#ffffff;
