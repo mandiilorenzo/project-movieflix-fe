@@ -86,3 +86,14 @@ export const Button = styled.button`
         transform: translateY(-2px)
         }
 `
+
+export const ErrorMessage = styled.span`
+    height: 10px;
+    display: block;
+    color: #ff4d4d;
+    font-size: 14px;
+    font-weight: 700;
+    margin-top: -10px;
+    margin-bottom: 5px;
+    font-family: 'Roboto', sans-serif;
+`

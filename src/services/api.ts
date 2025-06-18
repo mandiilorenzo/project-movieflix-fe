@@ -93,3 +93,23 @@ export const createMovie = async (data: Movie) => {
         icon: "success"
     });
 }
+
+export const registerUser = async (data: { name: string, email: string, password: string | number }) => {
+    const response = await fetch("http://localhost:3000/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    const responseBody = await response.json().catch(() => null);
+    if (!response.ok) {
+        console.error("Erro ao registrar usuário:", response.status, responseBody);
+        throw new Error(responseBody?.message || "Erro ao registrar usuário");
+    }
+    Swal.fire({
+        title: "Pronto!",
+        text: "Usuário registrado com sucesso!",
+        icon: "success"
+    });
+}
