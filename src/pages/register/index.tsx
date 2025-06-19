@@ -1,17 +1,23 @@
 import { useForm } from 'react-hook-form';
 import * as S from './style'
-import { registerUser } from '../../services/api';
+import { loginUser, registerUser } from '../../services/api';
 
-interface FormData {
+interface RegisterData {
     email: string;
-    password: string;
+    password: string | number;
     name: string; 
 }
 
-export const Form = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+interface LoginData {
+    email: string;
+    password: string | number;
+}
 
-    const onSubmit = async (data: FormData) => {
+export const Form = () => {
+    const { register: registerForm, handleSubmit: handleRegister, formState: { errors: registerErrors } } = useForm<RegisterData>();
+    const { register: loginForm, handleSubmit: handleLogin, formState: { errors: loginErrors } } = useForm<LoginData>();
+
+    const onRegisterSubmit = async (data: RegisterData) => {
         try {
             const response = await registerUser(data);
             return response;
@@ -20,59 +26,74 @@ export const Form = () => {
         }
     };
 
+    const onLoginSubmit = async (data: LoginData) => {
+        try {
+            const response = await loginUser(data);
+            return response;
+        } catch (error) {
+            console.error("Error logging in:", error);
+        }
+    };
+
     return (
         <S.Main>
-            <S.Form>
+            <S.Form onSubmit={handleLogin(onLoginSubmit)}>
                 <h1>Entrar</h1>
                 <S.Label htmlFor="email">E-mail:</S.Label>
                 <S.Input
                     type="text"
                     id="email"
                     placeholder="e-mail@email.com"
-                    {...register("email", { required: true })}
+                    {...loginForm("email", { required: true })}
                 />
-                {errors.email && <S.ErrorMessage>{errors.email.message || '\u00A0'}</S.ErrorMessage>}
+                {loginErrors.email && <S.ErrorMessage>{loginErrors.email.message || '\u00A0'}</S.ErrorMessage>}
 
                 <S.Label htmlFor="senha">Senha:</S.Label>
                 <S.Input
                     type="password"
                     id="password"
                     placeholder="Senha"
-                    {...register("password", { required: 'Campo obrigatório' })}
+                    {...loginForm("password", { required: 'Campo obrigatório' })}
                 />
-                {errors.password && <S.ErrorMessage>{errors.password.message || '\u00A0'}</S.ErrorMessage>}
+                {loginErrors.password && <S.ErrorMessage>{loginErrors.password.message || '\u00A0'}</S.ErrorMessage>}
 
                 <S.Button type="submit">Enviar</S.Button>
             </S.Form>
 
-            <S.Form onSubmit={handleSubmit(onSubmit)}>
+            <S.Form onSubmit={handleRegister(onRegisterSubmit)}>
                 <h1>Cadastrar-se</h1>
                 <S.Label htmlFor="nome">Nome completo:</S.Label>
                 <S.Input
                     type="text"
                     id="nome"
                     placeholder="Nome completo"
-                    {...register("name", { required: true })}
+                    {...registerForm("name", { required: true })}
                 />
-                {errors.name && <S.ErrorMessage>{errors.name.message || '\u00A0'}</S.ErrorMessage>}
+                {registerErrors.name && (
+                    <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
+                )}
 
                 <S.Label htmlFor="email-register">E-mail:</S.Label>
                 <S.Input
                     type="text"
                     id="email-register"
                     placeholder="e-mail@email.com"
-                    {...register("email", { required: true })}
+                    {...registerForm("email", { required: true })}
                 />
-                {errors.email && <S.ErrorMessage>{errors.email.message || '\u00A0'}</S.ErrorMessage>}
+                {registerErrors.name && (
+                    <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
+                )}
 
                 <S.Label htmlFor="password-register">Senha:</S.Label>
                 <S.Input
                     type="password"
                     id="password-register"
                     placeholder="Senha"
-                    {...register("password", { required: true })}
+                    {...registerForm("password", { required: true })}
                 />
-                {errors.password && <S.ErrorMessage>{errors.password.message || '\u00A0'}</S.ErrorMessage>}
+                {registerErrors.name && (
+                    <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
+                )}
 
                 <S.Button type="submit">Enviar</S.Button>
             </S.Form>

@@ -75,7 +75,7 @@ export const MovieList = () => {
             
             <S.MovieList>
                 {
-                    movies.map((movie) => {
+                    Array.isArray(movies) && movies.map((movie) => {
                         return (
                             <S.MovieItem key={movie.id}>
                                 <Link to={`/movie/${movie.id}`}>

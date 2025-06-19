@@ -18,7 +18,7 @@ export const Form = styled.form`
     flex-direction: column;
     padding: 40px;
     margin-top: 30px;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 20px;
     width: 100%;
     max-width: 500px;
