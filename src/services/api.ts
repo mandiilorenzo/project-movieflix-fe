@@ -1,22 +1,5 @@
 import Swal from "sweetalert2";
-
-interface Movie {
-    id: number,
-    title: string,
-    release_date: string,
-    genre_id: number,
-    language_id: number,
-    oscar_count: number,
-    duration: number,
-    genres: {
-        id: number,
-        name: string
-    },
-    languages: {
-        id: number,
-        name: string
-    }
-}
+import { Movie } from "../types/movie";
 
 export const getMovies = async () => {
     const response = await fetch("http://localhost:3000/movies", {
@@ -34,7 +17,8 @@ export const getMovieById = async (id: number) => {
     const response = await fetch(`http://localhost:3000/movies/${id}`, {
         method: "GET",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         }
     });
     return await response.json();
@@ -44,7 +28,8 @@ export const deleteMovieById = async (id: number) => {
     const response = await fetch(`http://localhost:3000/movies/${id}`, {
         method: "DELETE",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         }
     });
     if (!response.ok) {
@@ -61,7 +46,8 @@ export const updateMovieById = async (id: number, data: Movie) => {
     const response = await fetch(`http://localhost:3000/movies/${id}`, {
         method: "PUT",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(data)
     });
@@ -79,7 +65,8 @@ export const createMovie = async (data: Movie) => {
     const response = await fetch("http://localhost:3000/movies", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`
         },
         body: JSON.stringify(data)
     });
@@ -119,7 +106,7 @@ export const loginUser = async (data: { email: string, password: string | number
     const response = await fetch("http://localhost:3000/auth/login", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
     });
@@ -134,4 +121,6 @@ export const loginUser = async (data: { email: string, password: string | number
         text: "Usuário logado com sucesso!",
         icon: "success"
     });
+
+    return responseBody;
 }
