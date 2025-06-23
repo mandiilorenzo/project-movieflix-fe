@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { InputProps } from "../../types/input";
 
 export const Main = styled.div`
     background-color: #141414;
@@ -7,8 +8,33 @@ export const Main = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-direction: column;
     gap: 50px;
+
+    h1 {
+        color: #ffffff;
+        font-size: 60px;
+        font-weight: 300;
+        letter-spacing: 1.5px;
+        font-family: "Bebas Neue", sans-serif;
+
+        span {
+            color: #33ccff;
+            }
+        }
+    }
 `
+
+export const ContainerForm = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+    width: 100%;
+    max-width: 1200px;
+    flex-wrap: wrap;
+`
+
 
 export const Form = styled.form`
     background-color: #1e1e1e;
@@ -21,7 +47,7 @@ export const Form = styled.form`
     justify-content: flex-start;
     gap: 20px;
     width: 100%;
-    max-width: 500px;
+    width: 500px;
     height: 500px;
 
     h1 {
@@ -34,9 +60,9 @@ export const Form = styled.form`
         }
 `
 
-export const Input = styled.input`
+export const Input = styled.input<InputProps>`
     background-color: #1e1e1e;
-    border: 1px solid #a100ff;
+    border: 1px solid ${({ $isValid }) => ($isValid ? "#00ff88" : "#a100ff")};
     color: #ffffff;
     padding: 8px 12px;
     width: 100%;
@@ -53,9 +79,11 @@ export const Input = styled.input`
     
     &:focus {
         outline: none;
-        border: 1px solid  #ff00f2;
-        box-shadow: 0 0 10px rgba(255, 0, 242, 0.4);
-        transform: translateY(-2px)
+        border: 1px solid ${({ $isValid }) => ($isValid ? "#00ff88" : "#a100ff")};
+        box-shadow: 0 0 10px
+        ${({ $isValid }) =>
+        $isValid ? "rgba(0, 255, 136, 0.4)" : "rgba(161, 0, 255, 0.4)"};
+        transform: translateY(-2px);
     }
 `
 

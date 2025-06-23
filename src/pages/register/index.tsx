@@ -1,23 +1,13 @@
 import { useForm } from 'react-hook-form';
 import * as S from './style'
 import { loginUser, registerUser } from '../../services/api';
-
-interface RegisterData {
-    email: string;
-    password: string | number;
-    name: string; 
-}
-
-interface LoginData {
-    email: string;
-    password: string | number;
-}
+import { LoginUser, RegisterUser } from '../../types/user';
 
 export const Form = () => {
-    const { register: registerForm, handleSubmit: handleRegister, formState: { errors: registerErrors } } = useForm<RegisterData>();
-    const { register: loginForm, handleSubmit: handleLogin, formState: { errors: loginErrors } } = useForm<LoginData>();
+    const { register: registerForm, handleSubmit: handleRegister, formState: { errors: registerErrors, touchedFields: touchedRegister } } = useForm<RegisterUser>();
+    const { register: loginForm, handleSubmit: handleLogin, formState: { errors: loginErrors, touchedFields: touchedLogin  } } = useForm<LoginUser>();
 
-    const onRegisterSubmit = async (data: RegisterData) => {
+    const onRegisterSubmit = async (data: RegisterUser) => {
         try {
             const response = await registerUser(data);
             return response;
@@ -26,7 +16,7 @@ export const Form = () => {
         }
     };
 
-    const onLoginSubmit = async (data: LoginData) => {
+    const onLoginSubmit = async (data: LoginUser) => {
         try {
             const response = await loginUser(data);
             return response;
@@ -35,16 +25,28 @@ export const Form = () => {
         }
     };
 
+    const isValidField = (name: keyof LoginUser) => {
+        return touchedLogin[name] && !loginErrors[name];
+    };
+
+    const isValidRegisterField = (name: keyof RegisterUser) => {
+        return touchedRegister[name] && !registerErrors[name];
+    };
+
     return (
         <S.Main>
-            <S.Form onSubmit={handleLogin(onLoginSubmit)}>
+            <h1>Seja bem vindo(a) ao Movie<span>flix</span> !</h1>
+            
+            <S.ContainerForm>
+                <S.Form onSubmit={handleLogin(onLoginSubmit)}>
                 <h1>Entrar</h1>
                 <S.Label htmlFor="email">E-mail:</S.Label>
                 <S.Input
                     type="text"
                     id="email"
                     placeholder="e-mail@email.com"
-                    {...loginForm("email", { required: true })}
+                    $isValid={isValidField("email")}
+                    {...loginForm("email", { required: 'Campo obrigatório' })}
                 />
                 {loginErrors.email && <S.ErrorMessage>{loginErrors.email.message || '\u00A0'}</S.ErrorMessage>}
 
@@ -53,6 +55,7 @@ export const Form = () => {
                     type="password"
                     id="password"
                     placeholder="Senha"
+                    $isValid={isValidField("password")}
                     {...loginForm("password", { required: 'Campo obrigatório' })}
                 />
                 {loginErrors.password && <S.ErrorMessage>{loginErrors.password.message || '\u00A0'}</S.ErrorMessage>}
@@ -62,12 +65,13 @@ export const Form = () => {
 
             <S.Form onSubmit={handleRegister(onRegisterSubmit)}>
                 <h1>Cadastrar-se</h1>
-                <S.Label htmlFor="nome">Nome completo:</S.Label>
+                <S.Label htmlFor="name">Nome completo:</S.Label>
                 <S.Input
                     type="text"
-                    id="nome"
+                    id="name"
                     placeholder="Nome completo"
-                    {...registerForm("name", { required: true })}
+                    $isValid={isValidRegisterField("name")}
+                    {...registerForm("name", { required: 'Campo obrigatório' })}
                 />
                 {registerErrors.name && (
                     <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
@@ -78,7 +82,8 @@ export const Form = () => {
                     type="text"
                     id="email-register"
                     placeholder="e-mail@email.com"
-                    {...registerForm("email", { required: true })}
+                    $isValid={isValidRegisterField("email")}
+                    {...registerForm("email", { required: 'Campo obrigatório' })}
                 />
                 {registerErrors.name && (
                     <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
@@ -89,7 +94,8 @@ export const Form = () => {
                     type="password"
                     id="password-register"
                     placeholder="Senha"
-                    {...registerForm("password", { required: true })}
+                    $isValid={isValidRegisterField("password")}
+                    {...registerForm("password", { required: 'Campo obrigatório' })}
                 />
                 {registerErrors.name && (
                     <S.ErrorMessage>{registerErrors.name.message}</S.ErrorMessage>
@@ -97,6 +103,8 @@ export const Form = () => {
 
                 <S.Button type="submit">Enviar</S.Button>
             </S.Form>
+            </S.ContainerForm>
+            
         </S.Main>
     );
 }
