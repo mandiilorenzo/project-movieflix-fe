@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MovieList } from "./home/movie-list";
+import { MovieList } from "./movielist/movie-list";
 import { Layout } from "../layouts/layout";
 import { Movies } from "./movie";
 import { Form } from "./register";
@@ -10,10 +10,10 @@ export const router = createBrowserRouter([
         path: "/",
         element: <Layout/>,
         children: [
-            { index: true, element: <MovieList/> },
-            {path: "/home", element: <MovieList/>},
+            { index: true, element: <Form/> },
+            {path: "/home", element: <Form/>},
             {path: "/movie/:id", element: <Movies/>},
-            {path: "/register", element: <Form/>},
+            {path: "/movies", element: <MovieList/>},
             {path: "/createMovie", element: <CreateMovie/>}
         ]
     }
