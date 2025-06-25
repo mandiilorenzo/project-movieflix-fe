@@ -3,30 +3,9 @@ import { createMovie } from '../../services/api';
 import Select, { GroupBase } from 'react-select';
 import { getCustomSelectStyles } from './styleSelect';
 import * as S from './style';
-
-interface formData {
-    id: number,
-    title: string,
-    release_date: string,
-    genre_id: number,
-    language_id: number,
-    oscar_count: number,
-    duration: number,
-    genres: {
-        id: number,
-        name: string
-    },
-    languages: {
-        id: number,
-        name: string
-    }
-}
-
-export type Option = {
-    value: number;
-    label: string;
-};
-
+import { Movie } from '../../types/movie';
+import { Option } from '../../types/option';
+import { useNavigate } from 'react-router-dom';
 
 const languageOptions: Option[] = [
     { value: 1, label: 'Português' },
@@ -47,19 +26,21 @@ const genreOptions: Option[] = [
 ];
 
 export const CreateMovie = () => {
-    const { register, handleSubmit, control, formState: { errors, touchedFields } } = useForm<formData>();
+    const { register, handleSubmit, control, formState: { errors, touchedFields }, getValues } = useForm<Movie>();
 
-    const onSubmit = async (data: formData) => {
+    const navigate = useNavigate();
+
+    const onSubmit = async (data: Movie) => {
         try {
-            const response = await createMovie(data);
-            return response;
+            await createMovie(data);
+            navigate("/movies");
         } catch (error) {
             console.error("Error creating movie:", error);
         }
     };
 
-    const isValidField = (name: keyof formData) => {
-        return touchedFields[name] && !errors[name];
+    const isValidField = (name: keyof Movie) => {
+        return touchedFields[name] && !errors[name] && !!getValues(name);
     };
 
     return (
