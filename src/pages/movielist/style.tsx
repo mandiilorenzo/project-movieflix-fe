@@ -2,21 +2,42 @@ import styled from "styled-components";
 
 export const Main = styled.main`
     height: 100vh;
+    width: 100%;
+    height: 100%;
     margin: auto;
     background-color: #141414;
     font-family: "Bebas Neue", sans-serif;
     padding-bottom: 30px;
+    display: flex;
+`
+
+export const Sidebar = styled.aside`
+    width: 200px;
+    height: 100%;
+    border-left: 2px solid #7B2CBF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
+`
+
+export const ContainerMovies = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 20px;
 
     h1 {
-        color:#ffffff;
-        text-align: center;
-        padding-top: 40px;
-        margin-bottom: 20px;
-        font-family: "Bebas Neue", sans-serif;
-        letter-spacing: 1px;
-        font-size: 40px;
+        color: #ffffff;
+        font-size: 36px;
         font-weight: 400;
-    }
+        letter-spacing: 1px;
+        font-family: "Bebas Neue", sans-serif;
+        margin-bottom: 20px;
+        }
 `
 
 export const MovieList = styled.ul`

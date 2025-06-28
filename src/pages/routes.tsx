@@ -12,8 +12,8 @@ export const router = createBrowserRouter([
         children: [
             { index: true, element: <Form/> },
             {path: "/home", element: <Form/>},
-            {path: "/movie/:id", element: <Movies/>},
             {path: "/movies", element: <MovieList/>},
+            {path: "/movie/:id", element: <Movies/>},
             {path: "/createMovie", element: <CreateMovie/>}
         ]
     }
